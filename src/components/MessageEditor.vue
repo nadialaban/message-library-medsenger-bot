@@ -5,9 +5,8 @@
 
         <card title="Описание сообщения">
             <form-group48 title="Название">
-                <input class="form-control form-control-sm"
-                       :class="this.validated && !message.title ? 'is-invalid' : ''"
-                       v-model="message.title"/>
+                <input class="form-control form-control-sm" v-model="message.title"
+                       :class="this.validated && !message.title ? 'is-invalid' : ''"/>
             </form-group48>
 
             <form-group48 title="Текст">
@@ -15,7 +14,7 @@
             </form-group48>
 
             <form-group48 title="Категория">
-                <textarea class="form-control form-control-sm" v-model="message.category"></textarea>
+                <input class="form-control form-control-sm" v-model="message.category"/>
             </form-group48>
 
             <!-- Админка -->
