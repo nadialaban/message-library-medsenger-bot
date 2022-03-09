@@ -6,7 +6,7 @@
             <!-- фильтрация -->
             <div class="row" style="margin-bottom: 5px;">
                 <div class="col" v-if="is_admin">
-                    <select class="form-control form-control-sm" v-model="current_clinic" >
+                    <select class="form-control form-control-sm" v-model="current_clinic">
                         <option :value="undefined" disabled>Выбор клиники</option>
                         <option v-for="clinic in clinics" :value="clinic.id">{{
                                 clinic.name
@@ -36,7 +36,7 @@
             <br>
 
             <!-- карточки -->
-            <div class="accordion" id="accordionMessages">
+            <div class="accordion" id="accordionMessages" v-if="filtered_messages.length">
                 <accordion-item :title="message.title" :image="images.message" parent="#accordionMessages" :key="i"
                                 :object_id="i"
                                 v-for="(message, i) in filtered_messages">
@@ -71,6 +71,14 @@
                     </div>
 
                 </accordion-item>
+            </div>
+
+            <div v-else>
+                <p style="text-align: center"><img :src="images.nothing_found"/></p>
+
+                <p style="text-align: center">
+                    <small>Ничего не найдено.</small>
+                </p>
             </div>
         </div>
     </div>
@@ -117,8 +125,8 @@ export default {
 
             if (this.current_clinic)
                 messages = messages.filter(m => !m.include_clinics && !m.exclude_clinics ||
-                                     m.include_clinics && m.include_clinics.includes(this.current_clinic) ||
-                                     m.exclude_clinics && m.exclude_clinics.includes(this.current_clinic))
+                    m.include_clinics && m.include_clinics.includes(this.current_clinic) ||
+                    m.exclude_clinics && m.exclude_clinics.includes(this.current_clinic))
 
             return messages
         },
@@ -141,7 +149,6 @@ export default {
                 else if (action == 'show')
                     this.files_to_show[file.id] = file
                 this.$forceUpdate()
-                console.log(this.files_to_show)
             }).catch(() => MyEvent.fire('load-error'));
         },
         // messages

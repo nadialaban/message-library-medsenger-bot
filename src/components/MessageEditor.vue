@@ -231,7 +231,6 @@ export default {
         });
 
         MyEvent.listen('navigate-to-create-message-page', () => {
-            console.log(this.clinics)
             this.message = {
                 editors: '',
                 include_clinics: [],
