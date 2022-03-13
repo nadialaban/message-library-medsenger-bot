@@ -92,7 +92,7 @@ def delayed(delay, f, args):
 
 
 def dir_last_updated(folder):
-    str(max(os.path.getmtime(os.path.join(root_path, f))
+    return str(max(os.path.getmtime(os.path.join(root_path, f))
                    for root_path, dirs, files in os.walk(folder)
                    for f in files))
 
