@@ -64,7 +64,7 @@
 
                     <!-- Действия -->
                     <div style="margin-top: 15px">
-                        <a href="#" @click="send_now(message)">Отправить</a>
+                        <button class="btn btn-primary btn-sm" @click="send_now(message)">Отправить</button>
                         <a href="#" @click="edit_message(message)"
                            v-if="is_admin || message.editors.includes(doctor_id)">Редактировать</a>
                         <a href="#" @click="delete_message(message)" v-if="is_admin">Удалить</a>
