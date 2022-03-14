@@ -6,7 +6,7 @@
             <!-- фильтрация -->
             <div class="row" style="margin-bottom: 5px;">
                 <div class="col" v-if="is_admin">
-                    <select class="form-control form-control-sm" v-model="current_clinic">
+                    <select class="form-control form-control-sm" v-model="current_clinic" @change="filter_messages()">
                         <option :value="undefined" disabled>Выбор клиники</option>
                         <option v-for="clinic in clinics" :value="clinic.id">{{
                                 clinic.name
@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="col">
-                    <select class="form-control form-control-sm" v-model="current_category">
+                    <select class="form-control form-control-sm" v-model="current_category" @change="filter_messages()">
                         <option :value="undefined" disabled>Выбор категории</option>
                         <option v-for="category in Object.keys(message_groups)" :value="category">{{
                                 category
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col">
                     <input type="text" v-model="search_query" class="form-control form-control-sm"
-                           placeholder="Поиск по сообщениям...">
+                           placeholder="Поиск по сообщениям..." @change="filter_messages()">
                 </div>
                 <div class="d-grid col-1 mx-auto">
                     <button class="btn btn-primary btn-sm" @click="create_message()">Создать</button>
@@ -96,7 +96,7 @@ export default {
     name: "Dashboard",
     components: {AccordionItem, Loading, MoreInfoBlock, Card},
     props: {
-        messages: {
+        data: {
             required: true
         },
         clinics: {
@@ -107,29 +107,13 @@ export default {
         return {
             search_query: '',
             files_to_show: {},
+            messages: [],
+            filtered_messages: [],
             current_category: undefined,
             current_clinic: undefined
         }
     },
     computed: {
-        filtered_messages() {
-            let messages = []
-            if (!this.current_category)
-                messages = this.messages.filter(m =>
-                    m.title.toLowerCase().includes(this.search_query.toLowerCase()) ||
-                    m.text.toLowerCase().includes(this.search_query.toLowerCase()))
-            else
-                messages = this.message_groups[this.current_category].filter(m =>
-                    m.title.toLowerCase().includes(this.search_query.toLowerCase()) ||
-                    m.text.toLowerCase().includes(this.search_query.toLowerCase()))
-
-            if (this.current_clinic)
-                messages = messages.filter(m => !m.include_clinics && !m.exclude_clinics ||
-                    m.include_clinics && m.include_clinics.includes(this.current_clinic) ||
-                    m.exclude_clinics && m.exclude_clinics.includes(this.current_clinic))
-
-            return messages
-        },
         message_groups() {
             return this.group_by(this.messages, 'category')
         },
@@ -152,6 +136,22 @@ export default {
             }).catch(() => MyEvent.fire('load-error'));
         },
         // messages
+        filter_messages: function () {
+            this.filtered_messages = []
+            if (!this.current_category)
+                this.filtered_messages = this.messages.filter(m =>
+                    m.title.toLowerCase().includes(this.search_query.toLowerCase()) ||
+                    m.text.toLowerCase().includes(this.search_query.toLowerCase()))
+            else
+                this.filtered_messages = this.message_groups[this.current_category].filter(m =>
+                    m.title.toLowerCase().includes(this.search_query.toLowerCase()) ||
+                    m.text.toLowerCase().includes(this.search_query.toLowerCase()))
+
+            if (this.current_clinic)
+                this.filtered_messages = messages.filter(m => !m.include_clinics && !m.exclude_clinics ||
+                    m.include_clinics && m.include_clinics.includes(this.current_clinic) ||
+                    m.exclude_clinics && m.exclude_clinics.includes(this.current_clinic))
+        },
         create_message: function () {
             MyEvent.fire('navigate-to-create-message-page')
         },
@@ -202,15 +202,16 @@ export default {
         },
 
     },
+    created() {
+        this.messages = this.data
+        this.filtered_messages = this.data
+    },
     mounted() {
-        MyEvent.listen('dashboard-to-main', () => {
-            if (this.window_mode == 'settings') {
-                this.state = 'main'
-            }
-        });
-
-        MyEvent.listen('home', () => {
-            this.state = 'main'
+        this.messages = this.data
+        MyEvent.listen('update-messages', (messages) => {
+            this.messages = messages
+            this.filter_messages()
+            this.$forceUpdate()
         });
 
         MyEvent.listen('open-more-info', (id) => {

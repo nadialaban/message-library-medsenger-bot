@@ -219,12 +219,6 @@ export default {
     created() {
     },
     mounted() {
-        MyEvent.listen('home', (form) => {
-            this.errors = []
-            this.message = undefined
-            this.$forceUpdate()
-        });
-
         MyEvent.listen('create-message-editor', () => {
             this.message = {}
             this.backup = JSON.stringify(this.message)

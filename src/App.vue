@@ -3,7 +3,7 @@
         <vue-confirm-dialog/>
         <loading v-if="state == 'loading'"/>
         <div class="container" v-else>
-            <dashboard :clinics="clinics" :messages="messages" v-show="state == 'dashboard'"/>
+            <dashboard :clinics="clinics" :data="messages" v-show="state == 'dashboard'"/>
             <message-editor :clinics="clinics" v-show="state == 'message-editor'"/>
         </div>
     </div>
@@ -31,22 +31,21 @@ export default {
         // navigation
         MyEvent.listen('navigate-to-create-message-page', () => this.state = 'message-editor');
         MyEvent.listen('back-to-dashboard', () => this.state = 'dashboard');
-        MyEvent.listen('home', () => this.state = 'dashboard');
 
         // message managing
         MyEvent.listen('message-created', (data) => {
             this.state = 'dashboard'
             this.messages.push(data)
-            MyEvent.fire('dashboard-to-main');
+            MyEvent.fire('update-messages', this.messages);
         });
         MyEvent.listen('message-edited', (data) => {
-            this.state = 'dashboard'
             let index = this.messages.findIndex(m => m.id == data.id)
             if (index != null) {
                 this.messages[index] = data
                 this.$forceUpdate()
             }
-            MyEvent.fire('dashboard-to-main');
+            this.state = 'dashboard'
+            MyEvent.fire('update-messages', this.messages);
         });
         MyEvent.listen('edit-message', (message) => {
             this.state = 'message-editor'
@@ -57,6 +56,7 @@ export default {
 
         MyEvent.listen('remove-message', (id) => {
             this.messages = this.messages.filter(m => m.id != id)
+            MyEvent.fire('update-messages', this.messages);
         })
 
         this.load()
