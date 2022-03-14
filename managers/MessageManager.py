@@ -89,7 +89,5 @@ class MessageManager(Manager):
             return None
 
     def send(self, message, contract_id):
-        # fixme добавить файлы
-        result = self.medsenger_api.send_message(contract_id, message['text'], attachments=message['attached_files'],
-                                                 only_patient=True)
+        result = self.medsenger_api.send_message(contract_id, message['text'], attachments=message['attached_files'])
         return result
