@@ -232,6 +232,7 @@ export default {
 
         MyEvent.listen('navigate-to-create-message-page', () => {
             this.message = {
+                attached_files: [],
                 editors: '',
                 include_clinics: [],
                 exclude_clinics: []
