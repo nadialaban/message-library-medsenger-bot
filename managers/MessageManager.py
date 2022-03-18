@@ -100,7 +100,7 @@ class MessageManager(Manager):
             materials = [{'name': file['title'], 'link': LOCALHOST + '/' + file['path']} for file in
                          message['attached_files'] if file['title']]
             print(materials)
-            self.medsenger_api.set_info_materials(contract_id, materials)
+            self.medsenger_api.set_info_materials(contract_id, str(materials))
 
         self.contract_manager.add_message(contract_id, message['id'])
         return result
