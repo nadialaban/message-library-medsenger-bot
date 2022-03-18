@@ -76,10 +76,8 @@
                             </div>
 
                         </accordion-item>
-
                     </div>
                 </div>
-
             </div>
 
             <div v-else>

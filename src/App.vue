@@ -2,9 +2,12 @@
     <div style="padding-bottom: 15px;">
         <vue-confirm-dialog/>
         <loading v-if="state == 'loading'"/>
-        <div class="container" v-else>
-            <dashboard :clinics="clinics" :data="messages" v-show="state == 'dashboard'"/>
-            <message-editor :clinics="clinics" v-show="state == 'message-editor'"/>
+        <div v-else>
+            <dashboard-header :patient="patient" v-if="patient"/>
+            <div class="container">
+                <dashboard :clinics="clinics" :data="messages" v-show="state == 'dashboard'"/>
+                <message-editor :clinics="clinics" v-show="state == 'message-editor'"/>
+            </div>
         </div>
     </div>
 </template>
@@ -13,13 +16,15 @@
 import Dashboard from "./components/Dashboard";
 import Loading from "./components/parts/Loading";
 import MessageEditor from "./components/MessageEditor";
+import DashboardHeader from "./components/parts/DashboardHeader";
 
 export default {
     name: 'app',
-    components: {MessageEditor, Loading, Dashboard},
+    components: {DashboardHeader, MessageEditor, Loading, Dashboard},
     data() {
         return {
             state: "loading",
+            patient: undefined,
             message: {},
             messages: [],
             clinics: []
@@ -71,7 +76,10 @@ export default {
             }
 
             if (this.window_mode == 'settings') {
-                this.axios.get(this.url('/api/get_available_messages')).then(this.process_load_answer);
+                this.axios.get(this.url('/api/get_patient')).then((response) => {
+                    this.patient = response.data
+                    this.axios.get(this.url('/api/get_available_messages')).then(this.process_load_answer);
+                })
             }
         },
         process_load_answer: function (response) {

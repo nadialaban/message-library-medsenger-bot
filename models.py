@@ -16,11 +16,14 @@ class Contract(db.Model):
 
     is_admin = db.Column(db.Boolean, default=False)
 
+    sent_messages = db.Column(db.JSON, nullable=True)
+
     def as_dict(self, native=False):
         serialized = {
             "id": self.id,
             "clinic_id": self.clinic_id,
-            "is_admin": self.is_admin
+            "is_admin": self.is_admin,
+            "sent_messages": self.sent_messages
         }
 
         if native:

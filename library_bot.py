@@ -147,6 +147,13 @@ def get_clinics(args, form):
     return jsonify(medsenger_api.get_clinics_info())
 
 
+@app.route('/api/get_patient', methods=['GET'])
+@verify_args
+def get_patient(args, form):
+    contract_id = int(args.get('contract_id'))
+    return jsonify(contract_manager.get_patient(contract_id))
+
+
 with app.app_context():
     db.create_all()
 

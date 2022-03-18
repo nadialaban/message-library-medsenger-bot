@@ -38,13 +38,31 @@ class ContractManager(Manager):
         except Exception as e:
             log(e)
 
+    def add_message(self, contract_id, message_id):
+        contract = Contract.query.filter_by(id=contract_id).first()
+
+        if not contract:
+            raise Exception("No contract_id = {} found".format(contract_id))
+
+        if not contract.sent_messages:
+            contract.sent_messages = [message_id]
+        elif message_id not in contract.sent_messages:
+            contract.sent_messages = contract.sent_messages + [message_id]
+
+        self.__commit__()
+
+        return contract.sent_messages
+
     def get_patient(self, contract_id):
         contract = Contract.query.filter_by(id=contract_id).first()
 
         if not contract:
             raise Exception("No contract_id = {} found".format(contract_id))
 
-        return contract.patient
+        result = self.medsenger_api.get_patient_info(contract_id)
+        result.update({'sent_messages': contract.sent_messages})
+
+        return result
 
     def get(self, contract_id, active=None):
         contract = Contract.query.filter_by(id=contract_id).first()

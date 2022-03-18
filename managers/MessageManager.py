@@ -3,6 +3,7 @@ import json
 from helpers import log, timezone_now
 from managers.Manager import Manager
 from managers.FileManager import FileManager
+from managers.ContractManager import ContractManager
 from models import Contract, Message
 
 
@@ -10,6 +11,7 @@ class MessageManager(Manager):
     def __init__(self, *args):
         super(MessageManager, self).__init__(*args)
         self.file_manager = FileManager(*args)
+        self.contract_manager = ContractManager(*args)
 
     def get_available(self, contract):
         messages = Message.query.all()
@@ -90,4 +92,5 @@ class MessageManager(Manager):
 
     def send(self, message, contract_id):
         result = self.medsenger_api.send_message(contract_id, message['text'], attachments=message['attached_files'])
+        self.contract_manager.add_message(contract_id, message['id'])
         return result
