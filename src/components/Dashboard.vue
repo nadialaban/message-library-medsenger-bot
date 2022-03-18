@@ -45,7 +45,7 @@
                 <div class="col">
                     <div class="accordion" :id="`accordion_${message.id}`">
                         <accordion-item :title="message.title" :image="images.message"
-                                        :sent="sent_messages.includes(message.id)"
+                                        :sent="sent_messages && sent_messages.includes(message.id)"
                                         :parent="`#accordion_${message.id}`"
                                         :key="message.id" :object_id="message.id">
                             <p class="card-text"> {{ message.text }} </p>
