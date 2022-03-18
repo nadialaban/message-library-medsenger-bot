@@ -1,7 +1,8 @@
 <template>
     <div class="accordion-item">
         <h2 class="accordion-header" :id="`heading${object_id}`">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="`#collapse${object_id}`"
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    :data-bs-target="`#collapse${object_id}`"
                     aria-expanded="false" :aria-controls="`collapse${object_id}`">
                 {{ title }}
             </button>
@@ -32,6 +33,12 @@ export default {
 </script>
 
 <style scoped>
+.accordion-button:hover, .accordion-button:active, .accordion-button:focus, .accordion-button:not(.collapsed)  {
+    color: #006c88;
+    background-color: rgba(0, 108, 136, 0.1);
+}
+
+
 .accordion-body {
     margin-bottom: 5px;
     background-repeat: no-repeat;

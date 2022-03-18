@@ -36,41 +36,50 @@
             <br>
 
             <!-- карточки -->
-            <div class="accordion" id="accordionMessages" v-if="filtered_messages.length">
-                <accordion-item :title="message.title" :image="images.message" parent="#accordionMessages" :key="i"
-                                :object_id="i"
-                                v-for="(message, i) in filtered_messages">
+            <div class="row d-flex" v-for="message in filtered_messages" v-if="filtered_messages.length">
+                <div class="col-1">
+                    <button class="btn btn-primary btn-sm w-100" style="height: 52px" @click="send_now(message)">
+                        Отправить
+                    </button>
+                </div>
+                <div class="col">
+                    <div class="accordion" :id="`accordion_${message.id}`">
+                        <accordion-item :title="message.title" :image="images.message"
+                                        :parent="`#accordion_${message.id}`"
+                                        :key="message.id" :object_id="message.id">
+                            <p class="card-text"> {{ message.text }} </p>
 
-                    <p class="card-text"> {{ message.text }} </p>
-
-                    <!-- Файлы -->
-                    <div class="row">
-                        <div v-for="file in message.attached_files" class="col-6">
-                            <div class="row-fluid">
-                                <img :src="images.file" height="20"/>
-                                <a href="#" @click="get_file(file.id, 'download')">{{ file.name }} (скачать)</a>
+                            <!-- Файлы -->
+                            <div class="row">
+                                <div v-for="file in message.attached_files" class="col-4">
+                                    <div class="row-fluid">
+                                        <img :src="images.file" height="20"/>
+                                        <a href="#" @click="get_file(file.id, 'download')">{{ file.name }} (скачать)</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div v-for="file in message.attached_files">
-                        <more-info-block :title="`Просмотр ${file.name}`" :id="`file_${file.id}`"
-                                         v-if="file.type.includes('image')">
-                            <loading v-if="!files_to_show[file.id]"/>
-                            <img :src="`data:${file.type};base64,${files_to_show[file.id].base64}`"
-                                 :style="`max-width: ${img_width}px; max-height: ${img_height}px;`" v-else/>
-                        </more-info-block>
-                    </div>
+                            <div v-for="file in message.attached_files">
+                                <more-info-block :title="`Просмотр ${file.name}`" :id="`file_${file.id}`"
+                                                 v-if="file.type.includes('image')">
+                                    <loading v-if="!files_to_show[file.id]"/>
+                                    <img :src="`data:${file.type};base64,${files_to_show[file.id].base64}`"
+                                         :style="`max-width: ${img_width}px; max-height: ${img_height}px;`" v-else/>
+                                </more-info-block>
+                            </div>
 
-                    <!-- Действия -->
-                    <div style="margin-top: 15px">
-                        <button class="btn btn-primary btn-sm" @click="send_now(message)">Отправить</button>
-                        <a href="#" @click="edit_message(message)"
-                           v-if="is_admin || message.editors.includes(doctor_id)">Редактировать</a>
-                        <a href="#" @click="delete_message(message)" v-if="is_admin">Удалить</a>
-                    </div>
+                            <!-- Действия -->
+                            <div style="margin-top: 15px">
+                                <a href="#" @click="edit_message(message)"
+                                   v-if="is_admin || message.editors.includes(doctor_id)">Редактировать</a>
+                                <a href="#" @click="delete_message(message)" v-if="is_admin">Удалить</a>
+                            </div>
 
-                </accordion-item>
+                        </accordion-item>
+
+                    </div>
+                </div>
+
             </div>
 
             <div v-else>
