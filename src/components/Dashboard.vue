@@ -44,7 +44,7 @@
                 </div>
                 <div class="col">
                     <div class="accordion" :id="`accordion_${message.id}`">
-                        <accordion-item :title="message.title" :image="images.message"
+                        <accordion-item :title="message.title" :image="images.message" :sent="sent_messages.includes(message.id)"
                                         :parent="`#accordion_${message.id}`"
                                         :key="message.id" :object_id="message.id">
                             <p class="card-text"> {{ message.text }} </p>
@@ -115,6 +115,7 @@ export default {
             search_query: '',
             files_to_show: {},
             messages: [],
+            sent_messages: [],
             filtered_messages: [],
             current_category: undefined,
             current_clinic: undefined
@@ -189,6 +190,7 @@ export default {
         },
         send_now: function (message) {
             let alert = () => {
+                this.sent_messages.push(message.id)
                 this.$alert("Сообщение отправлено!");
             }
 
@@ -210,11 +212,12 @@ export default {
 
     },
     created() {
-        this.messages = this.data
-        this.filtered_messages = this.data
+        this.messages = this.data.messages
+        this.filtered_messages = this.data.messages
+        this.sent_messages = this.data.sent_messages
     },
     mounted() {
-        this.messages = this.data
+        this.messages = this.data.messages
         MyEvent.listen('update-messages', (messages) => {
             this.messages = messages
             this.filter_messages()

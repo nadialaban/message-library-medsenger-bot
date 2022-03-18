@@ -4,7 +4,7 @@
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     :data-bs-target="`#collapse${object_id}`"
                     aria-expanded="false" :aria-controls="`collapse${object_id}`">
-                {{ title }}
+                {{ title }} <span class="text-muted" v-if="sent">&nbsp;(отправлено)</span>
             </button>
         </h2>
         <div :id="`collapse${object_id}`" class="accordion-collapse collapse" :aria-labelledby="`heading${object_id}`"
@@ -19,7 +19,7 @@
 <script>
 export default {
     name: "AccordionItem",
-    props: ['title', 'image', 'object_id', 'parent'],
+    props: ['title', 'image', 'object_id', 'parent', 'sent'],
     computed: {
         bg: function () {
             if (this.image) {

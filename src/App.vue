@@ -5,7 +5,8 @@
         <div v-else>
             <dashboard-header :patient="patient" v-if="patient"/>
             <div class="container">
-                <dashboard :clinics="clinics" :data="messages" v-show="state == 'dashboard'"/>
+                <dashboard :clinics="clinics" :data="{'messages': messages, 'sent_messages': patient.sent_messages}"
+                           v-show="state == 'dashboard'"/>
                 <message-editor :clinics="clinics" v-show="state == 'message-editor'"/>
             </div>
         </div>
