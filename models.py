@@ -45,6 +45,7 @@ class Message(db.Model):
     editors = db.Column(db.JSON, nullable=True)
 
     attached_files = db.relationship('AttachedFile', backref=backref('message', uselist=False), lazy=True)
+    pin_files = db.Column(db.Boolean, default=False)
 
     def as_dict(self):
         return {
@@ -55,7 +56,8 @@ class Message(db.Model):
             'editors': self.editors,
             'include_clinics': self.include_clinics,
             'exclude_clinics': self.exclude_clinics,
-            'attached_files': sorted([file.as_dict() for file in self.attached_files], key=lambda k: k['name'])
+            'attached_files': sorted([file.as_dict() for file in self.attached_files], key=lambda k: k['name']),
+            'pin_files': self.pin_files
         }
 
 
@@ -64,13 +66,16 @@ class AttachedFile(db.Model):
     message_id = db.Column(db.Integer, db.ForeignKey('message.id', ondelete="CASCADE"),  nullable=True)
     type = db.Column(db.String(255), nullable=True)
     name = db.Column(db.String(255), nullable=True)
+    title = db.Column(db.String(255), nullable=True)
     path = db.Column(db.String(255), nullable=True)
 
     def as_dict(self):
         return {
             'id': self.id,
             'type': self.type,
-            "name": self.name
+            'name': self.name,
+            'title': self.title,
+            'path': self.path
         }
 
 

@@ -21,7 +21,7 @@ class FileManager(Manager):
     def add(self, file, message_id):
         path = self.save_file(file, message_id)
         file = AttachedFile(message_id=message_id, type=file['type'],
-                            path=path, name=file['name'])
+                            path=path, name=file['name'], title=file['title'])
 
         self.db.session.add(file)
         self.__commit__()

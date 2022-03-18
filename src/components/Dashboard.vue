@@ -44,7 +44,8 @@
                 </div>
                 <div class="col">
                     <div class="accordion" :id="`accordion_${message.id}`">
-                        <accordion-item :title="message.title" :image="images.message" :sent="sent_messages.includes(message.id)"
+                        <accordion-item :title="message.title" :image="images.message"
+                                        :sent="sent_messages.includes(message.id)"
                                         :parent="`#accordion_${message.id}`"
                                         :key="message.id" :object_id="message.id">
                             <p class="card-text"> {{ message.text }} </p>
@@ -66,6 +67,18 @@
                                     <img :src="`data:${file.type};base64,${files_to_show[file.id].base64}`"
                                          :style="`max-width: ${img_width}px; max-height: ${img_height}px;`" v-else/>
                                 </more-info-block>
+                            </div>
+
+                            <div v-if="message.pin_files">
+                                <small><i>
+                                    Закрепляет файлы
+                                    <ul>
+                                        <li v-for="file in message.attached_files" v-if="file.title">
+                                            {{ file.title }} ({{ file.name }})
+                                        </li>
+                                    </ul>
+
+                                </i></small>
                             </div>
 
                             <!-- Действия -->

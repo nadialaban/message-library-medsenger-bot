@@ -40,6 +40,9 @@
         </card>
 
         <card title="Файлы">
+            <form-group48 title="Закрепить в материалах" description="Будут закреплены только файлы с описанием">
+                <input type="checkbox" class="monitoring-input" v-model="message.pin_files"/>
+            </form-group48>
             <form-group48 title="Название">
                 <input type="file" class="monitoring-input" multiple v-bind:ref="'file'" @change="submit_file"/>
             </form-group48>
@@ -58,6 +61,8 @@
                         <a href="#" @click="get_file(file, 'download')">{{ file.name }} (скачать)</a>
                         <a class="btn btn-default btn-sm" @click="remove_file(i)">Удалить</a>
                     </div>
+                    <input class="form-control form-control-sm" v-model="file.title" placeholder="Введите описание"
+                           v-if="message.pin_files"/>
                 </div>
             </div>
 

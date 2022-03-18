@@ -1,5 +1,6 @@
 import time
 import json
+from config import LOCALHOST
 from helpers import log, timezone_now
 from managers.Manager import Manager
 from managers.FileManager import FileManager
@@ -76,6 +77,8 @@ class MessageManager(Manager):
             message.exclude_clinics = list(map(lambda c: c['id'], data.get('exclude_clinics', [])))
             message.exclude_clinics = message.exclude_clinics if len(message.exclude_clinics) else None
 
+            message.pin_files = data.get('pin_files', False)
+
             if not message_id:
                 self.db.session.add(message)
             self.__commit__()
@@ -92,5 +95,12 @@ class MessageManager(Manager):
 
     def send(self, message, contract_id):
         result = self.medsenger_api.send_message(contract_id, message['text'], attachments=message['attached_files'])
+
+        if message['pin_files']:
+            materials = [{'name': file['title'], 'link': LOCALHOST + '/' + file['path']} for file in
+                         message['attached_files'] if file['title']]
+            print(materials)
+            self.medsenger_api.set_info_materials(contract_id, materials)
+
         self.contract_manager.add_message(contract_id, message['id'])
         return result
