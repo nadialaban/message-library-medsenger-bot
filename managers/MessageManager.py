@@ -1,4 +1,3 @@
-import time
 import json
 from config import LOCALHOST
 from helpers import log, timezone_now
@@ -99,8 +98,8 @@ class MessageManager(Manager):
         if message['pin_files']:
             materials = [{'name': file['title'], 'link': LOCALHOST + '/' + file['path']} for file in
                          message['attached_files'] if file['title']]
-            print(materials)
-            self.medsenger_api.set_info_materials(contract_id, str(materials))
+            print(json.dumps(materials))
+            self.medsenger_api.set_info_materials(contract_id, json.dumps(materials))
 
         self.contract_manager.add_message(contract_id, message['id'])
         return result
