@@ -31,9 +31,6 @@ class ContractManager(Manager):
 
             contract.is_active = False
 
-            for object in contract.forms + contract.algorithms + contract.medicines + contract.reminders:
-                self.db.session.delete(object)
-
             self.__commit__()
         except Exception as e:
             log(e)
