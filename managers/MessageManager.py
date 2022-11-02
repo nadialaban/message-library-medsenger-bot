@@ -5,6 +5,7 @@ from managers.Manager import Manager
 from managers.FileManager import FileManager
 from managers.ContractManager import ContractManager
 from models import Contract, Message
+import urllib.parse
 
 
 class MessageManager(Manager):
@@ -96,9 +97,8 @@ class MessageManager(Manager):
         result = self.medsenger_api.send_message(contract_id, message['text'], attachments=message['attached_files'])
 
         if message['pin_files']:
-            materials = [{'name': file['title'], 'link': LOCALHOST + '/' + file['path'] + '/' + file['name']} for file in
+            materials = [{'name': file['title'], 'link': LOCALHOST + '/' + file['path'] + '/' + urllib.parse.quote(file['name'])} for file in
                          message['attached_files'] if file['title']]
-            print(json.dumps(materials))
             self.medsenger_api.set_info_materials(contract_id, json.dumps(materials))
 
         self.contract_manager.add_message(contract_id, message['id'])
