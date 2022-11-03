@@ -155,9 +155,9 @@ def get_patient(args, form):
 
 
 @app.route('/storage/<message>/<file>', methods=['GET', 'POST'])
-@verify_args
-def open_file(args, form, message, file):
+def open_file(message, file):
     return send_from_directory(directory=os.path.join(STORAGE_PATH_PARTS, message, file), filename='filename')
+
 
 with app.app_context():
     db.create_all()
