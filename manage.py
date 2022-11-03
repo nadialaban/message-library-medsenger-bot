@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from models import db
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand

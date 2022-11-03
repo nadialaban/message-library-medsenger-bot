@@ -154,6 +154,11 @@ def get_patient(args, form):
     return jsonify(contract_manager.get_patient(contract_id))
 
 
+@app.route('/storage/<message>/<file>', methods=['GET', 'POST'])
+@verify_args
+def open_file(args, form, message, file):
+    return send_from_directory(directory=os.path.join(STORAGE_PATH_PARTS, message, file), filename='filename')
+
 with app.app_context():
     db.create_all()
 
