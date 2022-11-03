@@ -4,6 +4,7 @@ from helpers import *
 from managers.ContractManager import ContractManager
 from managers.MessageManager import MessageManager
 from managers.FileManager import FileManager
+import urllib.parse
 
 medsenger_api = AgentApiClient(API_KEY, MAIN_HOST, AGENT_ID, API_DEBUG)
 contract_manager = ContractManager(medsenger_api, db)
@@ -154,9 +155,10 @@ def get_patient(args, form):
     return jsonify(contract_manager.get_patient(contract_id))
 
 
+# не работает...
 @app.route('/storage/<message>/<file>', methods=['GET', 'POST'])
 def open_file(message, file):
-    return send_from_directory(directory=os.path.join(STORAGE_PATH_PARTS, message, file), filename='filename')
+    return send_from_directory(directory=os.path.join(STORAGE_PATH_PARTS, message, urllib.parse.unquote(file)), filename='filename')
 
 
 with app.app_context():
