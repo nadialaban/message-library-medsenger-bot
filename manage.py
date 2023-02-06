@@ -1,7 +1,6 @@
 from flask import Flask, send_from_directory
 from models import db
-from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate
 from sentry_sdk.integrations.flask import FlaskIntegration
 import sentry_sdk
 
@@ -21,9 +20,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = db_string
 db.init_app(app)
 
 migrate = Migrate(app, db)
-
-manager = Manager(app)
-manager.add_command('db', MigrateCommand)
 
 
 if __name__ == '__main__':
