@@ -1,7 +1,7 @@
-Flask~=1.1.2
-SQLAlchemy~=1.4.31
-pytz~=2021.3
-itsdangerous==2.0.1
+Flask
+SQLAlchemy
+pytz
+itsdangerous
 psycopg2-binary
 
-alembic~=1.7.6
+alembic
