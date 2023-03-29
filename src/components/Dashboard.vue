@@ -48,7 +48,7 @@
                                         :sent="sent_messages && sent_messages.includes(message.id)"
                                         :parent="`#accordion_${message.id}`"
                                         :key="message.id" :object_id="message.id">
-                            <p class="card-text"> {{ message.text }} </p>
+                            <p class="card-text" v-html="message.text"/>
 
                             <!-- Файлы -->
                             <div class="row">
