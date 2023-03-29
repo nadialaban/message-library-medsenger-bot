@@ -10,7 +10,7 @@
             </form-group48>
 
             <form-group48 title="Текст">
-                <textarea class="form-control form-control-sm" v-model="message.text"></textarea>
+                <textarea class="form-control form-control-sm" rows="15" v-model="message.text"></textarea>
             </form-group48>
 
             <form-group48 title="Категория">
