@@ -10,7 +10,7 @@
             </form-group48>
 
             <form-group48 title="Текст">
-                <textarea class="form-control form-control-sm" rows="15" v-model="message.text.replace('\n','<br>')"></textarea>
+                <textarea class="form-control form-control-sm" rows="15" v-model="br(message.text)"></textarea>
             </form-group48>
 
             <form-group48 title="Категория">
@@ -219,7 +219,11 @@ export default {
         process_save_error: function (response) {
             this.errors.push('Ошибка сохранения');
         },
-
+        br: function (text) {
+            let new_text = text.replace('\n', '<br>')
+            console.log(new_text)
+            return new_text
+        }
     },
     created() {
     },
