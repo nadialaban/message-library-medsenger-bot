@@ -34,8 +34,13 @@ def status(data):
 @app.route('/order', methods=['POST'])
 @verify_json
 def order(data):
-    pass
+    contract_id = data.get('contract_id')
+    if data['order'] == 'send_message':
+        message = message_manager.get_with_files(data['params']['message_id'])
+        message_manager.send(message, contract_id)
+        return 'ok'
 
+    return "not found"
 
 # contract management api
 
