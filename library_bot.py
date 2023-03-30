@@ -1,3 +1,5 @@
+import json
+
 from manage import *
 from medsenger_api import AgentApiClient
 from helpers import *
@@ -36,13 +38,15 @@ def status(data):
 def order(data):
     contract_id = data.get('contract_id')
     if data['order'] == 'send_message':
-        message = message_manager.get_with_files(data['params']['message_id'])
+        params = json.loads(data['params'])
+        message = message_manager.get_with_files(params['message_id'])
         message_manager.send(message, contract_id)
         return 'ok'
 
     return "not found"
 
 # contract management api
+
 
 @app.route('/init', methods=['POST'])
 @verify_json
