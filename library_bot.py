@@ -38,7 +38,7 @@ def status(data):
 def order(data):
     contract_id = data.get('contract_id')
     if data['order'] == 'send_message':
-        params = json.loads(data['params'])
+        params = data['params']
         message = message_manager.get_with_files(params['message_id'])
         message_manager.send(message, contract_id)
         return 'ok'

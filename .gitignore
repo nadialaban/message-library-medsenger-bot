@@ -19,3 +19,4 @@ test.py
 package-lock.json
 static/build.js
 static/build.js.map
+/text.html
