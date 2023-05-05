@@ -167,7 +167,7 @@ def get_patient(args, form):
 # не работает...
 @app.route('/storage/<message>/<file>', methods=['GET', 'POST'])
 def open_file(message, file):
-    return send_from_directory(directory=os.path.join(STORAGE_PATH_PARTS, message), filename=urllib.parse.unquote(file))
+    return send_from_directory(directory=os.path.join(STORAGE_PATH_PARTS, message), path=urllib.parse.unquote(file))
 
 
 with app.app_context():
