@@ -4,6 +4,7 @@
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     :data-bs-target="`#collapse${object_id}`"
                     aria-expanded="false" :aria-controls="`collapse${object_id}`">
+                <span v-if="is_admin" class="text-muted">{{ object_id }}&nbsp;–&nbsp;</span>
                 {{ title }} <span class="text-muted" v-if="sent">&nbsp;(отправлено)</span>
             </button>
         </h2>
@@ -33,7 +34,7 @@ export default {
 </script>
 
 <style scoped>
-.accordion-button:hover, .accordion-button:active, .accordion-button:focus, .accordion-button:not(.collapsed)  {
+.accordion-button:hover, .accordion-button:active, .accordion-button:focus, .accordion-button:not(.collapsed) {
     color: #006c88;
     background-color: rgba(0, 108, 136, 0.1);
 }
