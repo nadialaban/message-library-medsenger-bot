@@ -170,8 +170,8 @@ export default {
 
             if (this.current_clinic)
                 this.filtered_messages = this.messages.filter(m => !m.include_clinics && !m.exclude_clinics ||
-                    m.include_clinics && m.include_clinics.includes(this.current_clinic) ||
-                    m.exclude_clinics && m.exclude_clinics.includes(this.current_clinic))
+                    m.include_clinics && m.include_clinics.includes(this.current_clinic.id) ||
+                    m.exclude_clinics && !m.exclude_clinics.includes(this.current_clinic.id))
 
             this.filtered_messages = this.filtered_messages.sort((a, b) => ((a.title < b.title) ? -1 : ((a.title > b.title) ? 1 : 0)))
             this.$forceUpdate()
