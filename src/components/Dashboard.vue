@@ -169,11 +169,12 @@ export default {
                     m.text.toLowerCase().includes(this.search_query.toLowerCase()))
 
             if (this.current_clinic)
-                this.filtered_messages = messages.filter(m => !m.include_clinics && !m.exclude_clinics ||
+                this.filtered_messages = this.messages.filter(m => !m.include_clinics && !m.exclude_clinics ||
                     m.include_clinics && m.include_clinics.includes(this.current_clinic) ||
                     m.exclude_clinics && m.exclude_clinics.includes(this.current_clinic))
 
-            this.filtered_messages = this.filtered_messages.sort((a, b) => ((a.id < b.id) ? -1 : ((a.id > b.id) ? 1 : 0)))
+            this.filtered_messages = this.filtered_messages.sort((a, b) => ((a.title < b.title) ? -1 : ((a.title > b.title) ? 1 : 0)))
+            this.$forceUpdate()
         },
         create_message: function () {
             MyEvent.fire('navigate-to-create-message-page')
@@ -229,7 +230,7 @@ export default {
     created() {
         this.messages = this.data.messages
         this.filtered_messages = this.data.messages
-        this.filtered_messages = this.filtered_messages.sort((a, b) => ((a.id < b.id) ? -1 : ((a.id > b.id) ? 1 : 0)))
+        this.filtered_messages = this.filtered_messages.sort((a, b) => ((a.title < b.title) ? -1 : ((a.title > b.title) ? 1 : 0)))
         this.sent_messages = this.data.sent_messages
     },
     mounted() {

@@ -90,7 +90,9 @@ export default {
             }
 
             if (this.is_admin) {
-                this.axios.get(this.url('/api/get_clinics_info')).then(response => this.clinics = response.data)
+                this.axios
+                    .get(this.url('/api/get_clinics_info'))
+                    .then(response => this.clinics = response.data.sort((a, b) => ((a.name < b.name) ? -1 : ((a.name > b.name) ? 1 : 0))))
             }
         },
         process_load_error: function (response) {
