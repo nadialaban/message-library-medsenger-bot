@@ -159,14 +159,11 @@ export default {
         // messages
         filter_messages: function () {
             this.filtered_messages = []
-            if (!this.current_category)
-                this.filtered_messages = this.messages.filter(m =>
-                    m.title.toLowerCase().includes(this.search_query.toLowerCase()) ||
-                    m.text.toLowerCase().includes(this.search_query.toLowerCase()))
-            else
-                this.filtered_messages = this.message_groups[this.current_category].filter(m =>
-                    m.title.toLowerCase().includes(this.search_query.toLowerCase()) ||
-                    m.text.toLowerCase().includes(this.search_query.toLowerCase()))
+
+            this.filtered_messages = this.messages.filter(m =>
+                (!this.current_category || m.category == this.current_category) &&
+                (m.title.toLowerCase().includes(this.search_query.toLowerCase()) ||
+                m.text.toLowerCase().includes(this.search_query.toLowerCase())))
 
             if (this.current_clinic)
                 this.filtered_messages = this.messages.filter(m => !m.include_clinics && !m.exclude_clinics ||
