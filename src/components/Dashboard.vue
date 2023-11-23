@@ -166,7 +166,8 @@ export default {
                 m.text.toLowerCase().includes(this.search_query.toLowerCase())))
 
             if (this.current_clinic)
-                this.filtered_messages = this.filtered_messages.filter(m => !m.include_clinics && !m.exclude_clinics ||
+                this.filtered_messages = this.filtered_messages.filter(m =>
+                    !m.include_clinics && !m.exclude_clinics ||
                     m.include_clinics && m.include_clinics.includes(this.current_clinic) ||
                     m.exclude_clinics && !m.exclude_clinics.includes(this.current_clinic))
 
