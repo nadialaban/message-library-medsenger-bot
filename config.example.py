@@ -17,3 +17,5 @@ API_DEBUG = ''
 PRODUCTION = ''
 
 STORAGE_PATH_PARTS = 'storage'
+
+SENTRY = ''
