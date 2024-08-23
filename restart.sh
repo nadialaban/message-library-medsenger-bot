@@ -1,1 +1,1 @@
-supervisorctl restart agents-library
+touch /etc/uwsgi/apps/library.ini
