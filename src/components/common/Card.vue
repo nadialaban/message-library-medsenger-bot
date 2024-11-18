@@ -30,6 +30,7 @@ export default {
     background-repeat: no-repeat;
     background-position: right bottom;
     background-size: 55px;
+    border-color: rgba(0, 108, 136, 0.5);
 }
 
 .card a {
@@ -38,5 +39,18 @@ export default {
 
 .card-title {
     margin-bottom: 1.5rem;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.expanded {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: 0;
+    border-color:  #006c88;
+    margin: 0;
 }
 </style>

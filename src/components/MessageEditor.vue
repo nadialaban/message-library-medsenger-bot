@@ -82,11 +82,11 @@
 </template>
 
 <script>
-import ErrorBlock from "./parts/ErrorBlock";
-import FormGroup48 from "./parts/FormGroup-4-8";
-import Card from "./parts/Card";
-import MoreInfoBlock from "./parts/MoreInfoBlock";
-import Loading from "./parts/Loading";
+import ErrorBlock from "./common/ErrorBlock";
+import FormGroup48 from "./common/FormGroup-4-8";
+import Card from "./common/Card";
+import MoreInfoBlock from "./common/MoreInfoBlock";
+import Loading from "./common/Loading";
 
 import downloadjs from "downloadjs";
 import Multiselect from 'vue-multiselect'
@@ -123,7 +123,7 @@ export default {
                     if (confirm) {
                         let old = JSON.parse(this.backup)
                         this.copy(this.message, old)
-                        MyEvent.fire('back-to-dashboard');
+                        Event.fire('back-to-dashboard');
 
                         this.message = undefined
                         this.file_states = []
@@ -207,9 +207,9 @@ export default {
             this.message.id = response.data.id
 
             if (is_new) {
-                MyEvent.fire('message-created', this.message)
+                Event.fire('message-created', this.message)
             } else {
-                MyEvent.fire('message-edited', this.message)
+                Event.fire('message-edited', this.message)
             }
 
             this.message = undefined
@@ -224,12 +224,12 @@ export default {
     created() {
     },
     mounted() {
-        MyEvent.listen('create-message-editor', () => {
+        Event.listen('create-message-editor', () => {
             this.message = {}
             this.backup = JSON.stringify(this.message)
         });
 
-        MyEvent.listen('navigate-to-create-message-page', () => {
+        Event.listen('navigate-to-create-message-page', () => {
             this.message = {
                 attached_files: [],
                 editors: '',
@@ -243,7 +243,7 @@ export default {
             this.backup = JSON.stringify(this.message)
         });
 
-        MyEvent.listen('navigate-to-edit-message-page', message => {
+        Event.listen('navigate-to-edit-message-page', message => {
             this.message = message
 
             if (this.is_admin) {

@@ -6,13 +6,13 @@ import vmodal from 'vue-js-modal'
 import axios from "axios";
 import VueConfirmDialog from 'vue-confirm-dialog'
 import VueSimpleAlert from "vue-simple-alert";
-import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
+// import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 
-// Import Bootstrap an BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+// // Import Bootstrap an BootstrapVue CSS files (order is important)
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-window.MyEvent = new class {
+window.Event = new class {
     constructor() {
         this.vue = new Vue();
     }
@@ -89,7 +89,10 @@ Vue.mixin({
                 error: window.LOCAL_HOST + '/static/icons/icons8-delete-128.png',
                 nothing_found: window.LOCAL_HOST + '/static/icons/icons8-nothing-found-100.png',
                 file: window.LOCAL_HOST + '/static/icons/icons8-open-document-48.png',
-                message: window.LOCAL_HOST + '/static/icons/icons8-communication-96.png'
+                message: window.LOCAL_HOST + '/static/icons/icons8-communication-96.png',
+                send: window.LOCAL_HOST + '/static/icons/icons8-send-100.png',
+                collapse: window.LOCAL_HOST + '/static/icons/icons8-collapse-arrow-96.png',
+                expand: window.LOCAL_HOST + '/static/icons/icons8-expand-arrow-96.png',
             },
             axios: require('axios'),
             category_list: undefined,
@@ -105,10 +108,10 @@ Vue.use(vmodal, {componentName: 'Modal'})
 Vue.use(VueSimpleAlert);
 Vue.use(VueConfirmDialog)
 
-// Make BootstrapVue available throughout your project
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
+// // Make BootstrapVue available throughout your project
+// Vue.use(BootstrapVue)
+// // Optionally install the BootstrapVue icon components plugin
+// Vue.use(IconsPlugin)
 
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 

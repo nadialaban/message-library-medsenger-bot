@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input class="btn btn-link btn-sm text-muted" type="button" data-toggle="collapse" aria-expanded="false"
+    <input class="btn btn-link btn-sm text-muted shadow-none" type="button" data-toggle="collapse" aria-expanded="false"
            :value="`${closed ? '+' : '–'} ${title}`" :data-target="'#collapse' + id"
            :aria-controls="'collapse' + id" @click="click()">
     <div class="collapse" :id="'collapse' + id">
@@ -23,7 +23,7 @@ export default {
   methods: {
     click: function () {
       if (this.closed)
-        MyEvent.fire('open-more-info', this.id)
+        Event.fire('open-more-info', this.id)
       this.closed = !this.closed
     }
   }

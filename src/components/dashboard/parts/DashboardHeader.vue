@@ -3,9 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <p><strong>Пациент:</strong> {{ patient.name }} ({{ patient.birthday }})
-<!--                        <span class="float-right"><a @click="go_home()" href="#">Вернуться к началу</a></span>-->
-                    </p>
+                    <p><strong>Пациент:</strong> {{ patient.name }} ({{ patient.birthday }})</p>
                 </div>
             </div>
         </div>
@@ -28,6 +26,7 @@ export default {
 p {
     margin-top: 5px;
     margin-bottom: 5px;
+    font-size: small;
 }
 
 h5 {
